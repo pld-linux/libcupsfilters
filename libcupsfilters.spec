@@ -76,6 +76,8 @@ rm -rf $RPM_BUILD_ROOT
 # Remove .la pollution
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
+%{__rm} -rf $RPM_BUILD_ROOT%{_docdir}/libcupsfilters
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
