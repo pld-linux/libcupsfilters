@@ -5,7 +5,7 @@
 Summary:	Library for developing printing filters
 Name:		libcupsfilters
 Version:	2.1.0
-Release:	1
+Release:	2
 License:	Apache v2.0 with GPL v2 LGPL v2 Exception
 Group:		Libraries
 Source0:	https://github.com/OpenPrinting/libcupsfilters/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -25,6 +25,7 @@ BuildRequires:	libtiff-devel
 BuildRequires:	mupdf
 BuildRequires:	poppler-cpp-devel >= 0.19
 BuildRequires:	qpdf-devel >= 11.0.0
+Obsoletes:	cups-filters-libs < 2.0.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -38,6 +39,7 @@ Summary:	Header files for %{name} library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki %{name}
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	cups-filters-devel < 2.0.1
 
 %description devel
 Header files for %{name} library.
@@ -50,6 +52,7 @@ Summary:	Static %{name} library
 Summary(pl.UTF-8):	Statyczna biblioteka %{name}
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	cups-filters-static < 2.0.1
 
 %description static
 Static %{name} library.
