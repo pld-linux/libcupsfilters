@@ -65,6 +65,7 @@ Statyczna biblioteka %{name}.
 
 %build
 %configure \
+	--disable-silent-rules \
 	%{!?with_static_libs:--disable-static} \
 	--enable-dbus
 
