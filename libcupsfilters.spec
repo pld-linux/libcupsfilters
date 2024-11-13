@@ -11,20 +11,25 @@ Group:		Libraries
 Source0:	https://github.com/OpenPrinting/libcupsfilters/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	8eb0fb0273f35c4daf39a117c51691c6
 URL:		https://github.com/OpenPrinting/libcupsfilters
-BuildRequires:	autoconf
-BuildRequires:	automake
 BuildRequires:	cups-devel
 BuildRequires:	dbus-devel
 BuildRequires:	fontconfig-devel >= 2.0.0
-BuildRequires:	ghostscript
 BuildRequires:	lcms2-devel
 BuildRequires:	libexif-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
+BuildRequires:	libstdc++-devel >= 6:8
 BuildRequires:	libtiff-devel
-BuildRequires:	mupdf
+BuildRequires:	pkgconfig >= 1:0.20
 BuildRequires:	poppler-cpp-devel >= 0.19
 BuildRequires:	qpdf-devel >= 11.0.0
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
+Suggests:	cups-clients
+Requires:	fontconfig-libs >= 2.0.0
+Suggests:	ghostscript
+Suggests:	mupdf
+Requires:	qpdf-libs >= 11.0.0
 Obsoletes:	cups-filters-libs < 2.0.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -67,7 +72,10 @@ Statyczna biblioteka %{name}.
 %configure \
 	--disable-silent-rules \
 	%{!?with_static_libs:--disable-static} \
-	--enable-dbus
+	--enable-dbus \
+	--with-gs-path=/usr/bin/gs \
+	--with-ippfind-path=/usr/bin/ippfind \
+	--with-mutool-path=/usr/bin/mutool
 
 %{__make}
 
