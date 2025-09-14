@@ -1,20 +1,22 @@
 #
 # Conditional build:
-%bcond_with	static_libs	# static libraries
+%bcond_without	static_libs	# static library
 #
 Summary:	Library for developing printing filters
+Summary(pl.UTF-8):	Biblioteka do tworzenia filtrów drukowania
 Name:		libcupsfilters
 Version:	2.1.1
-Release:	2
-License:	Apache v2.0 with GPL v2 LGPL v2 Exception
+Release:	3
+License:	Apache v2.0 with GPL v2 exception
 Group:		Libraries
 Source0:	https://github.com/OpenPrinting/libcupsfilters/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	1e3144c242e7ddcee112d41c79266885
 URL:		https://github.com/OpenPrinting/libcupsfilters
-BuildRequires:	cups-devel
+BuildRequires:	cups-devel >= 1:2
 BuildRequires:	dbus-devel
 BuildRequires:	fontconfig-devel >= 2.0.0
-BuildRequires:	lcms2-devel
+BuildRequires:	gettext-tools >= 0.18.3
+BuildRequires:	lcms2-devel >= 2
 BuildRequires:	libexif-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
@@ -25,11 +27,11 @@ BuildRequires:	poppler-cpp-devel >= 0.19
 BuildRequires:	qpdf-devel >= 11.0.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Suggests:	cups-clients
 Requires:	fontconfig-libs >= 2.0.0
+Requires:	qpdf-libs >= 11.0.0
+Suggests:	cups-clients >= 1:2
 Suggests:	ghostscript
 Suggests:	mupdf
-Requires:	qpdf-libs >= 11.0.0
 Obsoletes:	cups-filters-libs < 2.0.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -38,6 +40,12 @@ Libcupsfilters provides a library, which implements common functions
 used in cups-browsed daemon and printing filters, and additional files
 as banner templates and character sets. The filters are used in CUPS
 daemon and in printer applications.
+
+%description -l pl.UTF-8
+Pakiet libcupsfilters dostarcza bibliotekę implementującą wspólne
+funkcje wykorzystywane w demonie cups-browsed i filtrach drukowania, a
+także dodatkowe pliki, takie jak szablony szyldów czy zestawy znaków.
+Filtry są używane przez demona CUPS oraz w aplikacjach drukujących.
 
 %package devel
 Summary:	Header files for %{name} library
@@ -88,7 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 # Remove .la pollution
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%{__rm} -rf $RPM_BUILD_ROOT%{_docdir}/libcupsfilters
+# packaged as %doc
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/libcupsfilters
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -98,9 +107,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CHANGES.md LICENSE NEWS NOTICE README.md
+%doc AUTHORS CHANGES.md COPYING NOTICE README.md
 %attr(755,root,root) %{_libdir}/libcupsfilters.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcupsfilters.so.2
+%ghost %{_libdir}/libcupsfilters.so.2
 %dir %{_datadir}/cups/banners
 %{_datadir}/cups/banners/*
 %dir %{_datadir}/cups/charsets
@@ -112,12 +121,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/%{name}.so
+%{_libdir}/libcupsfilters.so
 %{_includedir}/cupsfilters
 %{_pkgconfigdir}/libcupsfilters.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/%{name}.a
+%{_libdir}/libcupsfilters.a
 %endif
