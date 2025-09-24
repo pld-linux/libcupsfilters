@@ -6,7 +6,7 @@ Summary:	Library for developing printing filters
 Summary(pl.UTF-8):	Biblioteka do tworzenia filtrów drukowania
 Name:		libcupsfilters
 Version:	2.1.1
-Release:	4
+Release:	5
 License:	Apache v2.0 with GPL v2 exception
 Group:		Libraries
 Source0:	https://github.com/OpenPrinting/libcupsfilters/releases/download/%{version}/%{name}-%{version}.tar.xz
